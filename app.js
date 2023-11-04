@@ -102,6 +102,8 @@ window.addEventListener("load", () => {
       this.frameTimer = 0;
       this.frameInterval = 1000 / this.fps;
       this.maxFrames = 8;
+      this.jumpSound = new Audio();
+      this.jumpSound.src = "jump.mp3";
     }
     update(input, deltaTime, enemies) {
       enemies.forEach((e) => {
@@ -136,6 +138,7 @@ window.addEventListener("load", () => {
           input.keys.indexOf("swipeUp") > -1) &&
         this.onGround()
       ) {
+        this.jumpSound.play();
         this.vy = -30;
       } else {
         this.speed = 0;
@@ -350,6 +353,8 @@ window.addEventListener("load", () => {
   const input = new InputHandler();
   const player = new Player(canvas.width, canvas.height);
   const bg = new Background(canvas.width, canvas.height);
+  const gameOverSound = new Audio();
+  gameOverSound.src = "gameOver.mp3";
 
   let lastTime = 0;
   let enemyTimer = 0;
@@ -367,6 +372,7 @@ window.addEventListener("load", () => {
     handleEnemies(deltaTime);
     displayStatusText(ctx);
     if (!gameOver) requestAnimationFrame(animate);
+    else gameOverSound.play();
   }
   animate(0);
 });
